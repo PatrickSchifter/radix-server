@@ -1,0 +1,10 @@
+# Database connection settings
+DB_USER=radix_user
+DB_PASSWORD=radix_password
+DB_NAME=radix
+DB_HOST=localhost
+DB_PORT=5432
+
+# Prisma settings
+DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?schema=public
+SECRET_JWT=something
