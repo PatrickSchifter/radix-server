@@ -25,8 +25,12 @@ export const config = {
   server: {
     port: process.env.PORT || 3030,
     env: process.env.NODE_ENV || "development",
+    base_url: process.env.BASE_URL || "http://localhost:" + process.env.PORT,
   },
   secrets: {
     secretJwt: process.env.SECRET_JWT || "",
+  },
+  company: {
+    name: process.env.COMPANY_NAME || "",
   },
 };
