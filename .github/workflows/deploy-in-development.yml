@@ -1,0 +1,47 @@
+name: deploy-in-development
+
+run-name: Pulling changes and build
+on:
+  push:
+    branches: [develop]
+
+  pull_request_target:
+    branches: [develop]
+    types:
+      - closed
+
+jobs:
+  build:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the files
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          npm ci
+          npm run build
+
+  deploy:
+    if: false
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout the files
+        uses: actions/checkout@v4
+
+      - name: Deploy to Development Server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_SANDBOX_HOST }}
+          key: ${{ secrets.SSH_SANDBOX_KEY }}
+          username: ${{ secrets.SSH_SANDBOX_USER }}
+
+          script: |
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            cd radix-server
+            git pull
+            cd ci
+            sh start.sh
