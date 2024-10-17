@@ -12,3 +12,6 @@ SECRET_JWT=something
 #Server config
 PORT=3030
 NODE_ENV=development
+
+#Company config
+COMPANY_NAME=Radix
