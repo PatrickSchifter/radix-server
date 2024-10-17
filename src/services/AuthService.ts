@@ -1,6 +1,6 @@
 import UserRepository from "../repositories/UserRepository";
 import HttpResponse from "../utils/HttpResponse";
-import { validatePassword } from "../utils/password";
+import { validatePassword, encryptPassword } from "../utils/password";
 import { JwtTokenService } from "./JwtTokenService";
 import { Prisma } from "@prisma/client";
 
@@ -24,7 +24,7 @@ export class AuthService {
       await this.userRepository.create({
         email: data.email,
         name: data.name,
-        password: data.password,
+        password: await encryptPassword(data.password),
       });
       const userData = await this.userRepository.findByEmail({
         email: data.email,
