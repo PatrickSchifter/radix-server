@@ -12,6 +12,7 @@ const serverIp = ip.address();
 const port = config.server.port;
 
 app.use(cors({ origin: "*" }));
+app.use(express.json());
 
 const server = http.createServer(app);
 const apiServerUrl = `${config.server.base_url}/api`;
