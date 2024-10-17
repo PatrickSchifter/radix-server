@@ -1,6 +1,9 @@
 import express from "express";
 import EquipmentController from "../controllers/EquipmentController";
-import { validatePostEquipment } from "../middlewares/validate.equipment.middleware";
+import {
+  validatePostEquipment,
+  validateEquipmentPagination,
+} from "../middlewares/validate.equipment.middleware";
 import { AuthMiddleware } from "../middlewares/auth.middleware";
 const router = express.Router();
 const equipmentController = new EquipmentController();
@@ -43,8 +46,11 @@ router.post(
  *               $ref: '#/components/responses/Conflict'
  */
 
-router.get("/", AuthMiddleware, (req: Request, res: Response) =>
-  equipmentController.paginate(req, res)
+router.get(
+  "/",
+  AuthMiddleware,
+  validateEquipmentPagination,
+  (req: Request, res: Response) => equipmentController.paginate(req, res)
 );
 
 /**
