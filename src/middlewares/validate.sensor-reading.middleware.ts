@@ -64,7 +64,6 @@ export function validateFileMiddleware(
   res: Response,
   next: NextFunction
 ): void {
-  console.log(req.file);
   if (!req.file) {
     res.status(400).json({ error: "No file uploaded" });
     return;
