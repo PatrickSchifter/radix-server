@@ -1,7 +1,3 @@
-Here is the English version of your README:
-
----
-
 # Radix-Server
 
 **Radix-Server** is a technical challenge project for Radix. The solution aims to handle real-time sensor data for 2,000 oil and gas equipment pieces while managing data gaps through CSV uploads.
