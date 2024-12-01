@@ -47,6 +47,7 @@ The project requirements include:
 ### Bonus Implemented:
 
 - **Authentication System:** Integrated JWT and X-API-KEY for securing endpoints.
+- **Automated Deployment Scripts:** Deployment automation scripts are set up for both development and production environments using GitHub Actions. These scripts handle the deployment process efficiently, ensuring smooth releases for both environments.
 
 ---
 
