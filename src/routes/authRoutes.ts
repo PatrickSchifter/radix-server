@@ -30,12 +30,11 @@ router.post(
  *             email: jhondoe@email.com
  *             password: password
  *     responses:
- *       200:
+ *       201:
  *         description: Returns user
  *         content:
  *           application/json:
  *             example:
- *               user:
  *                 id: 1
  *                 name: John Doe
  *                 email: jhondoe@email.com

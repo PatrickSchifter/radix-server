@@ -7,6 +7,12 @@ import { config } from "./config/config";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 
+declare module "express-serve-static-core" {
+  interface Request {
+    equipmentId?: string;
+  }
+}
+
 const app = express();
 const serverIp = ip.address();
 const port = config.server.port;

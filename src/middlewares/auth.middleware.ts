@@ -1,10 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { config } from "../config/config";
+import EquipmentRepository from "../repositories/EquipmentRepository";
 
 export interface RequestUserId extends Request {
   userId?: number;
 }
+
+const equipmentRepository = new EquipmentRepository();
 
 export const AuthMiddleware = async (
   req: RequestUserId,
@@ -28,6 +31,37 @@ export const AuthMiddleware = async (
     } catch (err) {
       reply.status(401).send({ message: "Invalid token" });
     }
+  } catch (err) {
+    reply.status(500).send({ message: "Internal Server Error" });
+  }
+};
+
+export const AuthApiKeyMiddleware = async (
+  req: Request,
+  reply: Response,
+  next: NextFunction
+): Promise<any> => {
+  try {
+    const key =
+      (req.headers["X-API-KEY"] as string) ||
+      (req.headers["x-api-key"] as string);
+
+    if (!key) {
+      return reply.status(401).send({
+        message: "Api key not provided",
+      });
+    }
+
+    const existingApiKey = await equipmentRepository.findByApiKey(key);
+
+    if (!existingApiKey) {
+      return reply.status(401).send({
+        message: "Api key not found.",
+      });
+    }
+
+    req.equipmentId = existingApiKey.id;
+    next();
   } catch (err) {
     reply.status(500).send({ message: "Internal Server Error" });
   }
