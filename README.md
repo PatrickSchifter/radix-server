@@ -163,6 +163,8 @@ Replace `BASE_URL` with `http://localhost:3030` for local development.
    - Returns a JWT token.
 3. **Create Equipment**:
    - Endpoint: `POST /api/equipment`
+4. **GET Equipment API KEY**:
+   - Endpoint: `GET /api/equipment`
    - Returns an API key for the equipment.
 
 Use the API key with `POST /api/sensor-reading` for sending sensor data.
