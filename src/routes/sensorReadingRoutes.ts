@@ -10,6 +10,7 @@ import {
   validatePostSensorReading,
   validateFileMiddleware,
   validateSensorReadingPagination,
+  validateGetSensorReadingAverage,
 } from "../middlewares/validate.sensor-reading.middleware";
 
 const router = express.Router();
@@ -139,6 +140,64 @@ router.get(
  *               error: error details
  */
 
+router.get(
+  "/average",
+  AuthMiddleware,
+  validateGetSensorReadingAverage,
+  (req: Request, res: Response) => sensorReadingController.average(req, res)
+);
+
+/**
+ * @openapi
+ * /sensor-reading/average:
+ *   get:
+ *     description: Get average sensor readings
+ *     tags: [Sensor Reading]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: timestamp
+ *         schema:
+ *           type: string
+ *           enum: [24hours, 48hours, 1week, 1month]
+ *         description: Filter by time range (24 hours, 48 hours, 1 week, or 1 month)
+ *     responses:
+ *       200:
+ *         description: Returns average sensor readings
+ *         content:
+ *           application/json:
+ *             example:
+ *               - _avg:
+ *                   value: 73.25
+ *                 equipmentId: "EQ-12496"
+ *               - _avg:
+ *                   value: 75.90333333333334
+ *                 equipmentId: "EQ-12495"
+ *       400:
+ *         description: Invalid request parameters
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Invalid query parameters
+ *               errors:
+ *                 - msg: "Timestamp must be one of the following: '24hours', '48hours', '1week', '1month'"
+ *                   param: "timestamp"
+ *                   location: "query"
+ *       401:
+ *         description: Unauthorized - missing or invalid Bearer token
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Unauthorized access
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: An error occurred while paginating sensor readings
+ *               error: error details
+ */
 router.post(
   "/upload",
   AuthMiddleware,

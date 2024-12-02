@@ -59,6 +59,23 @@ export const validateSensorReadingPagination: RequestHandler[] = [
   },
 ];
 
+export const validateGetSensorReadingAverage: RequestHandler[] = [
+  query("timestamp")
+    .optional()
+    .isIn(["24hours", "48hours", "1week", "1month"])
+    .withMessage(
+      "Timestamp must be one of the following: '24hours', '48hours', '1week', '1month'"
+    ),
+
+  (req: Request, res: Response, next: NextFunction): void => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
 export function validateFileMiddleware(
   req: Request,
   res: Response,

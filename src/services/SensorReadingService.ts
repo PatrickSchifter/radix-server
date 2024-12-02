@@ -2,6 +2,7 @@ import HttpResponse from "../utils/HttpResponse";
 import SensorReadingRepository from "../repositories/SensorReadingRepository";
 import { PaginationRequest } from "../interfaces/PaginationInterface";
 import { Prisma } from "@prisma/client";
+import { TimestampFilter } from "../repositories/SensorReadingRepository";
 
 export class SensorReadingService {
   private sensorReadingService: SensorReadingRepository;
@@ -26,6 +27,16 @@ export class SensorReadingService {
       const sensor_reading = await this.sensorReadingService.createMany(data);
 
       return HttpResponse.created(sensor_reading);
+    } catch (error) {
+      console.error(error);
+      return HttpResponse.serverError();
+    }
+  }
+
+  async getAverage({ timestamp }: { timestamp: Date }) {
+    try {
+      const averages = await this.sensorReadingService.getAverage(timestamp);
+      return HttpResponse.ok(averages);
     } catch (error) {
       console.error(error);
       return HttpResponse.serverError();

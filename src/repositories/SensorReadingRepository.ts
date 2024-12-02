@@ -44,6 +44,22 @@ class SensorReadingRepository {
     }
   }
 
+  async getAverage(timestamp: Date) {
+    const averages = await prisma.sensorReading.groupBy({
+      by: ["equipmentId"],
+      _avg: {
+        value: true,
+      },
+      where: {
+        timestamp: {
+          gte: timestamp,
+        },
+      },
+    });
+
+    return averages;
+  }
+
   async paginate({
     where,
     pagination,
