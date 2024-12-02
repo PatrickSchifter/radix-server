@@ -103,6 +103,7 @@ The project requirements include:
    ```
 
 5. Run the application:
+
    - In development mode:
      ```bash
      npm run dev
@@ -112,6 +113,11 @@ The project requirements include:
      npm run build
      npm run start
      ```
+
+6. If you want mock data:
+   ```bash
+   npm run seed
+   ```
 
 ---
 
