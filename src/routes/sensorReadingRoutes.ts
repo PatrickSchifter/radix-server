@@ -9,6 +9,7 @@ import {
 import {
   validatePostSensorReading,
   validateFileMiddleware,
+  validateSensorReadingPagination,
 } from "../middlewares/validate.sensor-reading.middleware";
 
 const router = express.Router();
@@ -57,8 +58,11 @@ router.post(
  *                 value: 78.42
  */
 
-router.get("/", AuthMiddleware, (req: Request, res: Response) =>
-  sensorReadingController.paginate(req, res)
+router.get(
+  "/",
+  AuthMiddleware,
+  validateSensorReadingPagination,
+  (req: Request, res: Response) => sensorReadingController.paginate(req, res)
 );
 
 /**
