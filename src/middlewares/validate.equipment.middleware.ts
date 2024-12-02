@@ -30,7 +30,7 @@ export const validateEquipmentPagination: RequestHandler[] = [
     .withMessage("Page must be a positive integer")
     .toInt(),
 
-  query("id").optional().isString().withMessage("ID must be a string").toInt(),
+  query("id").optional().isString().withMessage("ID must be a string"),
 
   query("api_key")
     .optional()

@@ -56,6 +56,13 @@ class EquipmentRepository {
     const page = pagination?.page ? pagination.page : 1;
     const skip = (page - 1) * limit;
 
+    if (where?.id) {
+      where.id = {
+        contains: where.id,
+        mode: "insensitive",
+      } as Prisma.StringFilter;
+    }
+
     const equipments = await prisma.equipment.findMany({
       where,
       select,
